@@ -1,7 +1,7 @@
 # Liatrio-Simple-Web-Application
 
 # Table of Contents
-* [About](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#about))
+* [About](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#about)
 * [How to build (coming soon)](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#how-to-build)
 * [Documentation (coming soon)](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#documentation)
 * [Notes]()
