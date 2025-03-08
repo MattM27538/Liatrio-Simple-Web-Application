@@ -1,11 +1,11 @@
 # Liatrio-Simple-Web-Application
 
 # Table of Contents
-[About]()
-[How to build (coming soon)]()
-[Documentation (coming soon)]()
-[Notes]()
-[Resources]()
+* [About](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#about))
+* [How to build (coming soon)](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#how-to-build)
+* [Documentation (coming soon)](https://github.com/MattM27538/Liatrio-Simple-Web-Application/blob/main/README.md#documentation)
+* [Notes]()
+* [Resources]()
 
 # About
 Liatrio-Simple-Web-Application is a web application implementing Node.js, Express.js, docker, github actions, and google cloud to deploy
