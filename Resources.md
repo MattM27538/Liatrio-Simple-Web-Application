@@ -9,8 +9,7 @@
 * [https://expressjs.com/en/starter/hello-world.html](https://expressjs.com/en/starter/hello-world.html) [6]
 * [https://expressjs.com/en/starter/basic-routing.html](https://expressjs.com/en/starter/basic-routing.html) [7]
 ## JSON minification
-* [https://bito.ai/resources/json-minify-json-explained/#:~:text=Json%20minification%20is%20the%20process,best%20practices%20for%20using%20it](https://bito.ai/resources/json-minify-json-    
-  explained/#:~:text=Json%20minification%20is%20the%20process,best%20practices%20for%20using%20it) [8]
+* [https://bito.ai/resources/json-minify-json-explained/#:~:text=Json%20minification%20is%20the%20process,best%20practices%20for%20using%20it](https://tinyurl.com/y4z55cnk) [8]
 * [https://jsonformatter.org/json-minify](https://jsonformatter.org/json-minify) [9]
 ## Docker
 * [https://docs.docker.com/build/building/best-practices/](https://docs.docker.com/build/building/best-practices/) [10]
