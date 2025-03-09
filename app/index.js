@@ -7,7 +7,7 @@ const myObject={"message":"My name is Matthew Martinez,","timestamp":Date.now()}
 //Stringifying object before writing it out to remove "pretty print" header.
 const jsonString=JSON.stringify(myObject);
 
-//Send object information in response to '/' PATH request.
+//Send object information in response to '/' PATH "get" request.
 app.get('/',(req,res)=>{
     res.send(jsonString)
 })
