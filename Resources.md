@@ -13,4 +13,4 @@
 * [https://jsonformatter.org/json-minify](https://jsonformatter.org/json-minify) [9]
 ## Docker
 * [https://docs.docker.com/build/building/best-practices/](https://docs.docker.com/build/building/best-practices/) [10]
-* [https://docs.docker.com/build/cache/] [11]
+* [https://docs.docker.com/build/cache/](https://docs.docker.com/build/cache/) [11]
