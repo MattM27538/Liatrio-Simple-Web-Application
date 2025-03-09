@@ -12,14 +12,14 @@
 * In Node.js you control the environment. Unless you are building an open source application that anyone can deploy anywhere, you know which version of Node.js you will run the application on. [4]
 
 ## 03/08/25 -Intro to ExpressJS, JSON minification, and Docker build best practices
-* Express js
+### Express js
 * Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
 * Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on). [7]
 * Each route can have one or more handler functions, which are executed when the route is matched. [7]
 * Route definition takes the following structure:
   app.METHOD(PATH, HANDLER) app is an instance of express, METHOD is an HTTP request method, PATH is a path on the server and HANDLER is the function executed when the route is matched. [7]
 
-* JSON minification
+### JSON minification
 * JSON minification is the process of reducing the file size of a JSON file so that it can be parsed efficiently by web applications.
 * JSON minification works by removing unnecessary characters from a JSON file. This results in a much smaller file size, which can be parsed more quickly by the web application.
 * For example, removing unnecessary characters such as whitespace, line breaks, and comments can significantly reduce the file size without affecting the data itself
@@ -33,7 +33,7 @@
 * Testing your application after minifying any file is key; if any errors are introduced then they can easily be traced back to the minification process.
 * It is important to consider the security implications of minifying a file. If the file contains sensitive information, it is important to ensure that the minified version is secure and not easily readable.
 
-* Docker build - Best Practices
+### Docker build - Best Practices
 * Use multi-stage builds
 Multi-stage builds let you reduce the size of your final image. Everything that isn’t needed in the final image can be used in an earlier stage and discarded for the final stage as the final stage is what forms the final image. Split your Dockerfile instructions into distinct stages to make sure that the resulting output only contains the files that are needed to run the application.
 Using multiple stages can also let you build more efficiently by executing build steps in parallel.
