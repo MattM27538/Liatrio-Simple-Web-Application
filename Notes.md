@@ -45,7 +45,7 @@
   When building your own image from a Dockerfile, ensure you choose a minimal base image that matches your requirements. A smaller base image not only offers portability and fast downloads, but also shrinks the size of your image and minimizes the number of 
   vulnerabilities introduced through the dependencies.
 
-* Choose the right base image - You should also consider using two types of base image: one for building and unit testing, and another (typically slimmer) image for production. In the later stages of development, your image may not require build tools such as compilers, 
+  You should also consider using two types of base image: one for building and unit testing, and another (typically slimmer) image for production. In the later stages of development, your image may not require build tools such as compilers, 
   build systems, and debugging tools. A small image with minimal dependencies can considerably lower the attack surface.
   To ensure you get the same image every time you build can pin the image version to a specific digest. By pinning your images to a digest, you're guaranteed to always use the same image version, even if a publisher replaces the tag with a new image.
 
