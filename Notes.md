@@ -34,52 +34,45 @@
 * It is important to consider the security implications of minifying a file. If the file contains sensitive information, it is important to ensure that the minified version is secure and not easily readable.
 
 ### Docker build - Best Practices
-* Use multi-stage builds
-Multi-stage builds let you reduce the size of your final image. Everything that isn’t needed in the final image can be used in an earlier stage and discarded for the final stage as the final stage is what forms the final image. Split your Dockerfile instructions into distinct stages to make sure that the resulting output only contains the files that are needed to run the application.
-Using multiple stages can also let you build more efficiently by executing build steps in parallel.
+* Use multi-stage builds - Multi-stage builds let you reduce the size of your final image. Everything that isn’t needed in the final image can be used in an earlier stage and discarded for the final stage as the final stage is what forms the final image. Split your     
+  Dockerfile instructions into distinct stages to make sure that the resulting output only contains the files that are needed to run the application.
 
-* Create reusable stages
-If you have multiple images with a lot in common, consider creating a reusable stage that includes the shared components, and basing your unique stages on that. Docker only needs to build the common stage once. This means that your derivative images use memory on the Docker host more efficiently and load more quickly.
+  Using multiple stages can also let you build more efficiently by executing build steps in parallel.
 
-* Choose the right base image
-When choosing an image, ensure it's built from a trusted source and keep it small. Examples: Docker Official Images, Verified Publisher images, and Docker-Sponsored Open Source images.
+* Create reusable stages - If you have multiple images with a lot in common, consider creating a reusable stage that includes the shared components, and basing your unique stages on that. Docker only needs to build the common stage once. This means that your derivative    images use memory on the Docker host more efficiently and load more quickly.
 
-When building your own image from a Dockerfile, ensure you choose a minimal base image that matches your requirements. A smaller base image not only offers portability and fast downloads, but also shrinks the size of your image and minimizes the number of vulnerabilities introduced through the dependencies.
+* Choose the right base image - When choosing an image, ensure it's built from a trusted source and keep it small. Examples: Docker Official Images, Verified Publisher images, and Docker-Sponsored Open Source images.
+  When building your own image from a Dockerfile, ensure you choose a minimal base image that matches your requirements. A smaller base image not only offers portability and fast downloads, but also shrinks the size of your image and minimizes the number of 
+  vulnerabilities introduced through the dependencies.
 
-* Choose the right base image
-You should also consider using two types of base image: one for building and unit testing, and another (typically slimmer) image for production. In the later stages of development, your image may not require build tools such as compilers, build systems, and debugging tools. A small image with minimal dependencies can considerably lower the attack surface.
-To ensure you get the same image every time you build can pin the image version to a specific digest. By pinning your images to a digest, you're guaranteed to always use the same image version, even if a publisher replaces the tag with a new image.
+* Choose the right base image - You should also consider using two types of base image: one for building and unit testing, and another (typically slimmer) image for production. In the later stages of development, your image may not require build tools such as compilers, 
+  build systems, and debugging tools. A small image with minimal dependencies can considerably lower the attack surface.
+  To ensure you get the same image every time you build can pin the image version to a specific digest. By pinning your images to a digest, you're guaranteed to always use the same image version, even if a publisher replaces the tag with a new image.
 
-To exclude files not relevant to the build, without restructuring your source repository, use a .dockerignore file.
+  To exclude files not relevant to the build, without restructuring your source repository, use a .dockerignore file.
 
-Building an image includes any base images, libraries, or other software you use in your build.  To keep your images up-to-date and secure, make sure to rebuild your image often, with updated dependencies.
-To ensure that you're getting the latest versions of dependencies in your build, you can use the --no-cache option to avoid cache hits. 
-Example: docker build --no-cache -t my-image:my-tag.
+  Building an image includes any base images, libraries, or other software you use in your build.  To keep your images up-to-date and secure, make sure to rebuild your image often, with updated dependencies.
+  To ensure that you're getting the latest versions of dependencies in your build, you can use the --no-cache option to avoid cache hits. 
+  Example: docker build --no-cache -t my-image:my-tag.
 
-* Don't install unnecessary packages
-Avoid installing extra or unnecessary packages just because they might be nice to have. This allows for images to have reduced complexity, reduced dependencies, reduced file sizes, and reduced build times.
+* Don't install unnecessary packages - Avoid installing extra or unnecessary packages just because they might be nice to have. This allows for images to have reduced complexity, reduced dependencies, reduced file sizes, and reduced build times.
 
-* Decouple applications
-As a rule of thumb each container you create should have only one concern. Decoupling applications into multiple containers makes it easier to scale horizontally and reuse containers.
+* Decouple applications - As a rule of thumb each container you create should have only one concern. Decoupling applications into multiple containers makes it easier to scale horizontally and reuse containers.
 
-Try to keep containers as clean and modular as possible.
+  Try to keep containers as clean and modular as possible.
 
-* Sort multi-line arguments
-Whenever possible, sort multi-line arguments alphanumerically to make maintenance easier. This helps to avoid duplication of packages and make the list much easier to update.
-Adding a space before a backslash (\) helps as well.
+* Sort multi-line arguments - Whenever possible, sort multi-line arguments alphanumerically to make maintenance easier. This helps to avoid duplication of packages and make the list much easier to update.
+  Adding a space before a backslash (\) helps as well.
 
-* Leverage build cache
-When building an image, Docker steps through the instructions in your Dockerfile, executing each in the order specified. For each instruction, Docker checks whether it can reuse the instruction from the build cache.
+* Leverage build cache - When building an image, Docker steps through the instructions in your Dockerfile, executing each in the order specified. For each instruction, Docker checks whether it can reuse the instruction from the build cache.
 
-* Docker build cache(https://docs.docker.com/build/cache/)
-Each instruction in a Dockerfile translates to a layer in your final image. You can think of image layers as a stack, with each layer adding more content on top of the layers that came before it.
+* Docker build cache(https://docs.docker.com/build/cache/) - Each instruction in a Dockerfile translates to a layer in your final image. You can think of image layers as a stack, with each layer adding more content on top of the layers that came before it.
 
-Whenever a layer changes, that layer will need to be re-built.  All layers that come after that layer will need to run again as well.
+  Whenever a layer changes, that layer will need to be re-built.  All layers that come after that layer will need to run again as well.
 
-* Pin base image versions
-Ex: FROM alpine:3.19@sha256:13b7e62e8df80264dbb747995705a986aa530415763a6c 58f84a3ca8af9a5bcd
+* Pin base image versions - Ex: FROM alpine:3.19@sha256:13b7e62e8df80264dbb747995705a986aa530415763a6c 58f84a3ca8af9a5bcd
 
-Docker Scout's default Up-to-Date Base Images policy checks whether the base image version you're using is in fact the latest version. 
+  Docker Scout's default Up-to-Date Base Images policy checks whether the base image version you're using is in fact the latest version. 
 
 
 
