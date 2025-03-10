@@ -11,7 +11,7 @@
 * The difference between devDependencies and dependencies is that the former contains development tools, like a testing library, while the latter is bundled with the app in production. [3]
 * In Node.js you control the environment. Unless you are building an open source application that anyone can deploy anywhere, you know which version of Node.js you will run the application on. [4]
 
-## 03/08/25 -Intro to ExpressJS, JSON minification, and Docker build best practices
+## 03/08/25 -Intro to ExpressJS, JSON Minification, and Docker Build Best Practices
 ### Express js
 * Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
 * Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on). [7]
@@ -74,7 +74,7 @@
 
   Docker Scout's default Up-to-Date Base Images policy checks whether the base image version you're using is in fact the latest version. [10]
 
-## 03/09/25
+## 03/09/25 - Docker build Best Practices cont.
 ## WORKDIR
 * The WORKDIR instruction sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions that follow it in the Dockerfile. [14]
   If the WORKDIR doesn't exist, it will be created even if it's not used in any subsequent Dockerfile instruction. [14]
@@ -97,11 +97,12 @@
   container, use the -p flag on docker run to publish and map one or more ports, or the -P flag to publish all exposed ports and map them to high-order ports. [20]
 ## RUN
 * Split long or complex RUN statements on multiple lines separated with backslashes to make your Dockerfile more readable, understandable, and maintainable. Also, you can chain commands with the && operator. [10]
+
   Ex:
   RUN apt-get update && apt-get install -y --no-install-recommends \
       package-bar \
       package-baz \
-      package-foo
+      package-foo [17]
 * The cache for RUN instructions can be invalidated by using the --no-cache flag, for example docker build --no-cache. [17]
 * RUN has two forms: 
   Shell form:
@@ -126,10 +127,10 @@
 * The FROM instruction initializes a new build stage and sets the base image for subsequent instructions. [18]
 * ARG is the only instruction that may precede FROM in the Dockerfile. [18]
   
-* FROM instructions support variables that are declared by any ARG instructions that occur before the first FROM. [18]
+* FROM instructions support variables that are declared by any ARG instructions that occur before the first FROM.
   Ex:
   ARG  CODE_VERSION=latest
-  FROM base:${CODE_VERSION}
+  FROM base:${CODE_VERSION} [18]
 
 * FROM can appear multiple times within a single Dockerfile to create multiple images or use one build stage as a dependency for another. Note, each FROM instruction clears any state created by previous instructions. [18]
 
