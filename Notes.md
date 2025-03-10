@@ -11,7 +11,7 @@
 * The difference between devDependencies and dependencies is that the former contains development tools, like a testing library, while the latter is bundled with the app in production. [3]
 * In Node.js you control the environment. Unless you are building an open source application that anyone can deploy anywhere, you know which version of Node.js you will run the application on. [4]
 
-## 03/08/25 -Intro to ExpressJS, JSON minification, and Docker build best practices
+## 03/08/25 -Intro to ExpressJS, JSON Minification, and Docker Build Best Practices
 ### Express js
 * Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
 * Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on). [7]
@@ -73,6 +73,89 @@
 * Pin base image versions - Ex: FROM alpine:3.19@sha256:13b7e62e8df80264dbb747995705a986aa530415763a6c 58f84a3ca8af9a5bcd [10]
 
   Docker Scout's default Up-to-Date Base Images policy checks whether the base image version you're using is in fact the latest version. [10]
+
+## 03/09/25 - Docker build Best Practices cont.
+## WORKDIR
+* The WORKDIR instruction sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions that follow it in the Dockerfile. [14]
+  If the WORKDIR doesn't exist, it will be created even if it's not used in any subsequent Dockerfile instruction. [14]
+* The WORKDIR instruction can be used multiple times in a Dockerfile. If a relative path is provided, it will be relative to the path of the previous WORKDIR instruction. [14]
+* The WORKDIR instruction can resolve environment variables previously set using ENV. You can only use environment variables explicitly set in the Dockerfile. Ex:
+  ENV DIRPATH=/path
+  WORKDIR $DIRPATH/$DIRNAME
+  RUN pwd [14]
+* The output of the final pwd command in this Dockerfile would be “/path/$DIRNAME”.
+  If not specified, the default working directory is “/“. [14]
+* In practice, if you aren't building a Dockerfile from scratch (FROM scratch), the WORKDIR may likely be set by the base image you're using. Therefore, to avoid unintended operations in unknown directories, it's best practice to set your WORKDIR explicitly. [14]
+* When specifying WORKDIR in a build stage, you can use an absolute path, like /build, or a relative path, like ./build. Using a relative path means that the working directory is relative to whatever the previous working directory was. So if your base image uses 
+ /usr/local/foo as a working directory, and you specify a relative directory like WORKDIR build, the effective working directory becomes /usr/local/foo/build. [14]
+## EXPOSE
+* The EXPOSE instruction indicates the ports on which a container listens for connections. Consequently, you should use the common, traditional port for your application. For example, an image containing the Apache web server would use EXPOSE 80, while an image 
+  containing MongoDB would use EXPOSE 27017 and so on. [10]
+* The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if you don't specify a protocol. [20]
+* By default, EXPOSE assumes TCP. You can also specify UDP: EXPOSE 80/udp [20]
+* Note: the EXPOSE instruction doesn't actually publish the port. It functions as a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published. To publish the port when running the 
+  container, use the -p flag on docker run to publish and map one or more ports, or the -P flag to publish all exposed ports and map them to high-order ports. [20]
+## RUN
+* Split long or complex RUN statements on multiple lines separated with backslashes to make your Dockerfile more readable, understandable, and maintainable. Also, you can chain commands with the && operator. [10]
+
+  Ex:
+  RUN apt-get update && apt-get install -y --no-install-recommends \
+      package-bar \
+      package-baz \
+      package-foo [17]
+* The cache for RUN instructions can be invalidated by using the --no-cache flag, for example docker build --no-cache. [17]
+* RUN has two forms: 
+  Shell form:
+  RUN [OPTIONS] <command> ...
+  Exec form:
+  RUN [OPTIONS] [ "<command>", ... ] [17]
+
+## ADD or COPY
+* COPY supports basic copying of files into the container, from the build context or from a stage in a multi-stage build. ADD supports features for fetching files from remote HTTPS and Git URLs, and extracting tar files automatically when adding files from the build 
+  context. [10]
+* You'll mostly want to use COPY for copying files from one stage to another in a multi-stage build. If you need to add files from the build context to the container temporarily to execute a RUN instruction, you can often substitute the COPY instruction with a bind 
+  mount instead. For example, to temporarily add a requirements.txt file for a RUN pip install instruction:
+  RUN --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
+      pip install --requirement /tmp/requirements.txt [10]
+* Bind mounts are more efficient than COPY for including files from the build context in the container. Note that bind-mounted files are only added temporarily for a single RUN instruction, and don't persist in the final image. If you need to include files from the 
+  build context in the final image, use COPY. [10]
+* The ADD instruction is best for when you need to download a remote artifact as part of your build. [10]
+* ADD is better than manually adding files using something like wget and tar, because it ensures a more precise build cache. ADD also has built-in support for checksum validation of the remote resources, and a protocol for parsing branches, tags, and subdirectories 
+  from Git URLs. [10]
+
+## FROM
+* The FROM instruction initializes a new build stage and sets the base image for subsequent instructions. [18]
+* ARG is the only instruction that may precede FROM in the Dockerfile. [18]
+  
+* FROM instructions support variables that are declared by any ARG instructions that occur before the first FROM.
+  Ex:
+  ARG  CODE_VERSION=latest
+  FROM base:${CODE_VERSION} [18]
+
+* FROM can appear multiple times within a single Dockerfile to create multiple images or use one build stage as a dependency for another. Note, each FROM instruction clears any state created by previous instructions. [18]
+
+* Optionally a name can be given to a new build stage by adding AS name to the FROM instruction. The name can be used in subsequent FROM <name>, COPY --from=<name>, and RUN --mount=type=bind,from=<name> instructions to refer to the image built in this stage. [18]
+  The tag or digest values are optional. If you omit either of them, the builder assumes a latest tag by default.
+
+## CMD
+* The CMD instruction should be used to run the software contained in your image, along with any arguments. CMD should almost always be used in the form of CMD ["executable", "param1", "param2"]. [19]
+  
+* In most other cases, CMD should be given an interactive shell, such as bash, python and perl. For example, CMD ["perl", "-de0"], CMD ["python"], or CMD ["php", "-a"]. Using this form means that when you execute something like docker run -it python, you’ll get dropped 
+  into a usable shell, ready to go. [19]
+ 
+* There can only be one CMD instruction in a Dockerfile. If you list more than one CMD, only the last one takes effect. [19]
+  
+* The purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable, or they can omit the executable, in which case you must specify an ENTRYPOINT instruction as well. [19]
+
+
+## ENTRYPOINT
+* The best use for ENTRYPOINT is to set the image's main command, allowing that image to be run as though it was that command, and then use CMD as the default flags. [21]
+
+## VOLUME
+* You should use the VOLUME instruction to expose any database storage area, configuration storage, or files and folders created by your Docker container. You are strongly encouraged to use VOLUME for any combination of mutable or user-serviceable parts of your image.
+  The VOLUME instruction creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers. [22]
+  Ex:
+  VOLUME ["/data"]
 
 
 
