@@ -156,6 +156,59 @@
   The VOLUME instruction creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers. [22]
   Ex:
   VOLUME ["/data"]
+  
+## 03/10/25 -Intro to Github Actions
+### Understanding Github Actions
+* GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. [23]
+* You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production. [23]
+* You can configure a GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. [23]
+* Your workflow contains one or more jobs which can run in sequential order or in parallel. [23]
+* Each job will run inside its own virtual machine runner, or inside a container, and has one or more steps that either run a script that you define or run an action, which is a reusable extension that can simplify your workflow. [23]
+* A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule. 
+  [23]
+* An event is a specific activity in a repository that triggers a workflow run. For example, an activity can originate from GitHub when someone creates a pull request, opens an issue, or pushes a commit to a repository. [23]
+* A job is a set of steps in a workflow that is executed on the same runner. Each step is either a shell script that will be executed, or an action that will be run. [23]
+* Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another. [23]
+* You can configure a job's dependencies with other jobs; by default, jobs have no dependencies and run in parallel. When a job takes a dependency on another job, it waits for the dependent job to complete before running. [23]
+* An action is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task. Use an action to help reduce the amount of repetitive code that you write in your workflow files. [23]
+* A runner is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. Each workflow run executes in a fresh, newly-provisioned virtual machine. [23]
+* If you need a different operating system or require a specific hardware configuration, you can host your own runners. [23]
+
+### About Workflows
+* A workflow must contain the following basic components:
+  1.	One or more events that will trigger the workflow.
+  2.	One or more jobs, each of which will execute on a runner machine and run a series of one or more steps.
+  3.	Each step can either run a script that you define or run an action, which is a reusable extension that can simplify your workflow. [26]
+* Workflow triggers are events that cause a workflow to run. These events can be:
+  Events that occur in your workflow's repository
+  Events that occur outside of GitHub and trigger a repository_dispatch event on GitHub  
+  Scheduled times
+  Manual [26]
+
+#### Storing secrets
+* If your workflows use sensitive data, such as passwords or certificates, you can save these in GitHub as secrets and then use them in your workflows as environment variables. This means that you will be able to create and share workflows without having to embed 
+  sensitive values directly in the workflow's YAML source. [26]
+#### Creating dependent jobs
+* By default, the jobs in your workflow all run in parallel at the same time. If you have a job that must only run after another job has completed, you can use the needs keyword to create this dependency. If one of the jobs fails, all dependent jobs are skipped; 
+  however, if you need the jobs to continue, you can define this using the if conditional statement. [26]
+
+#### Using a matrix
+*A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are based on the combinations of the variables. [26]
+#### Caching dependencies
+* If your jobs regularly reuse dependencies, you can consider caching these files to help improve performance. Once the cache is created, it is available to all workflows in the same repository. [26]
+#### Using databases and service containers
+* If your job requires a database or cache service, you can use the services keyword to create an ephemeral container to host the service; the resulting container is then available to all steps in that job and is removed when the job has completed. [26]
+#### Reusing workflows
+* You can call one workflow from within another workflow. This allows you to reuse workflows, avoiding duplication and making your workflows easier to maintain. [26]
+#### Security hardening for workflows
+* GitHub provides security features that you can use to increase the security of your workflows. You can use GitHub's built-in features to ensure you are notified about vulnerabilities in the actions you consume, or to automate the process of keeping the actions in 
+  your workflows up to date. [26]
+#### Using environments
+* You can configure environments with protection rules and secrets to control the execution of jobs in a workflow. Each job in a workflow can reference a single environment. Any protection rules configured for the environment must pass before a job referencing the 
+  environment is sent to a runner. [26]
+
+
+
 
 
 
