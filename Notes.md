@@ -191,9 +191,8 @@
 #### Creating dependent jobs
 * By default, the jobs in your workflow all run in parallel at the same time. If you have a job that must only run after another job has completed, you can use the needs keyword to create this dependency. If one of the jobs fails, all dependent jobs are skipped; 
   however, if you need the jobs to continue, you can define this using the if conditional statement. [26]
-
 #### Using a matrix
-*A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are based on the combinations of the variables. [26]
+* A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are based on the combinations of the variables. [26]
 #### Caching dependencies
 * If your jobs regularly reuse dependencies, you can consider caching these files to help improve performance. Once the cache is created, it is available to all workflows in the same repository. [26]
 #### Using databases and service containers
