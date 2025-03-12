@@ -211,7 +211,7 @@
 * Workflow triggers are events that cause a workflow to run. [27]
 
 ### Triggering a workflow from a workflow
-  When you use the repository's GITHUB_TOKEN to perform tasks, events triggered by the GITHUB_TOKEN, with the exception of workflow_dispatch and repository_dispatch, will not create a new workflow run. This prevents you from accidentally creating recursive workflow 
+* When you use the repository's GITHUB_TOKEN to perform tasks, events triggered by the GITHUB_TOKEN, with the exception of workflow_dispatch and repository_dispatch, will not create a new workflow run. This prevents you from accidentally creating recursive workflow 
   runs. [27]
 
 * To minimize your GitHub Actions usage costs, ensure that you don't create recursive or unintended workflow runs. [27]
