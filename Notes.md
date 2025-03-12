@@ -206,6 +206,82 @@
 * You can configure environments with protection rules and secrets to control the execution of jobs in a workflow. Each job in a workflow can reference a single environment. Any protection rules configured for the environment must pass before a job referencing the 
   environment is sent to a runner. [26]
 
+## 03/11/25 -Intro to Github Actions (cont.)
+### Triggering a workflow
+* Workflow triggers are events that cause a workflow to run. [27]
+
+### Triggering a workflow from a workflow
+  When you use the repository's GITHUB_TOKEN to perform tasks, events triggered by the GITHUB_TOKEN, with the exception of workflow_dispatch and repository_dispatch, will not create a new workflow run. This prevents you from accidentally creating recursive workflow 
+  runs. [27]
+
+* To minimize your GitHub Actions usage costs, ensure that you don't create recursive or unintended workflow runs. [27]
+
+### Using events to trigger workflows
+* Use the “on” key to specify what events trigger your workflow. Ex: on: [push], on: [push, fork]. The second example use either event.  If multiple triggering events for your workflow occur at the same time, multiple workflow runs will be triggered. [27]
+
+### Using activity types and filters with multiple events
+* You can use activity types and filters to further control when your workflow will run. If you specify activity types or filters for an event and your workflow triggers on multiple events, you must configure each event separately. You must append a colon (:) to all 
+  events, including events without configuration. [27]
+
+### Using event activity types
+* Some events have activity types that give you more control over when your workflow should run. Use on.<event_name>.types to define the type of event activity that will trigger a workflow run. If you specify multiple activity types, only one of those event activity 
+  types needs to occur to trigger your workflow. [27]
+
+### Using filters
+* Some events have filters that give you more control over when your workflow should run. For example, the push event has a branches filter that causes your workflow to run only when a push to a branch that matches the branches filter occurs, instead of when any push 
+  occurs. [27]
+
+### Using filters to target specific branches or tags for push events
+* When using the push event, you can configure a workflow to run on specific branches or tags. [27]
+* Use the branches filter when you want to include branch name patterns or when you want to both include and exclude branch names patterns. Use the branches-ignore filter when you only want to exclude branch name patterns. You cannot use both the branches and branches- 
+  ignore filters for the same event in a workflow. [27]
+* Use the tags filter when you want to include tag name patterns or when you want to both include and exclude tag names patterns. Use the tags-ignore filter when you only want to exclude tag name patterns. You cannot use both the tags and tags-ignore filters for the 
+  same event in a workflow. [27]
+* When a pattern matches the branches-ignore or tags-ignore pattern, the workflow will not run. The patterns defined in branches and tags are evaluated against the Git ref's name. [27]
+* If you want to both include and exclude branch or tag patterns for a single event, use the branches or tags filter along with the ! character to indicate which branches or tags should be excluded. [27]
+* If you define a branch with the ! character, you must also define at least one branch without the ! character. Similarly, if you define a tag with the ! character, you must also define at least one tag without the ! [27]
+
+* Order matters!
+  A matching negative pattern (prefixed with !) after a positive match will exclude the Git ref. [27] 
+  A matching positive pattern after a negative match will include the Git ref again. [27]
+
+### Using filters to target specific paths for pull request or push events
+* Use the paths filter when you want to include file path patterns or when you want to both include and exclude file path patterns. Use the paths-ignore filter when you only want to exclude file path patterns. You cannot use both the paths and paths-ignore filters for 
+  the same event in a workflow. If you want to both include and exclude path patterns for a single event, use the paths filter prefixed with the ! character to indicate which paths should be excluded. [27]
+* If at least one path matches a pattern in the paths filter, the workflow runs. [27]
+* The rules for including and excluding paths match the rules for branches and tags. [27]
+
+### Using filters to target specific branches for workflow run events
+* When using the workflow_run event, you can specify what branches the triggering workflow must run on in order to trigger your workflow. [27]
+
+### Defining inputs for manually triggered workflows
+* When using the workflow_dispatch event, you can optionally specify inputs that are passed to the workflow. [27]
+  Defining inputs, outputs, and secrets for reusable workflows
+* You can define inputs and secrets that a reusable workflow should receive from a calling workflow. You can also specify outputs that a reusable workflow will make available to a calling workflow. [27]
+
+### Using event information
+* Information about the event that triggered a workflow run is available in the github.event context. The properties in the github.event context depend on the type of event that triggered the workflow. For example, a workflow triggered when an issue is labeled would 
+  have information about the issue and label. [27]
+
+### Further controlling how your workflow will run
+* You can use conditionals to further control whether jobs or steps in your workflow will run. [27]
+  jobs:
+    run_if_label_matches:
+      if: github.event.label.name == 'bug'
+* If you want to run different jobs or steps depending on what event triggered the workflow, you can use a conditional to check whether a specific event type exists in the event context.
+  - name: if_issue
+        if: github.event.issue
+        run: |
+          echo An issue was closed
+      - name: if_pr
+        if: github.event.pull_request
+        run: |
+          echo A pull request was closed [27]
+
+### Using environments to manually trigger workflow jobs
+* If you want to manually trigger a specific job in a workflow, you can use an environment that requires approval from a specific team or user. First, configure an environment with required reviewers. Then, reference the environment name in a job in your workflow using 
+  the environment: key. Any job referencing the environment will not run until at least one reviewer approves the job. [27]
+
 
 
 
