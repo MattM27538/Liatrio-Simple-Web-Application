@@ -282,6 +282,48 @@
 * If you want to manually trigger a specific job in a workflow, you can use an environment that requires approval from a specific team or user. First, configure an environment with required reviewers. Then, reference the environment name in a job in your workflow using 
   the environment: key. Any job referencing the environment will not run until at least one reviewer approves the job. [27]
 
+## 03/12/25 -Intro to Github Action (cont.)
+### Using pre-written building blocks in your workflow
+* You can use pre-written building blocks, called actions, in your workflow. An action is a pre-defined, reusable set of jobs or code that perform specific tasks within a workflow.
+
+### You can add an action to your workflow by referencing the action in your workflow file.
+* You can view the actions referenced in your GitHub Actions workflows as dependencies in the dependency graph of the repository containing your workflows.
+
+### Adding an action from GitHub Marketplace
+* An action's listing page includes the action's version and the workflow syntax required to use the action. To keep your workflow stable even when updates are made to an action, you can reference the version of the action to use by specifying the Git or Docker tag 
+  number in your workflow file.
+
+### Adding an action from the same repository
+* If an action is defined in the same repository where your workflow file uses the action, you can reference the action with either the ‌{owner}/{repo}@{ref} or ./path/to/dir syntax in your workflow file.
+
+### Adding an action from a different repository
+* If an action is defined in a different repository than your workflow file, you can reference the action with the {owner}/{repo}@{ref} syntax in your workflow file.
+
+### Referencing a container on Docker Hub
+* If an action is defined in a published Docker container image on Docker Hub, you must reference the action with the docker://{image}:{tag} syntax in your workflow file. To protect your code and data, we strongly recommend you verify the integrity of the Docker 
+  container image from Docker Hub before using it in your workflow.
+
+### Using tags
+* Tags are useful for letting you decide when to switch between major and minor versions of an action, but these are more ephemeral and can be moved or deleted by the maintainer. Example: 
+  steps:
+    - uses: actions/javascript-action@v1.0.1
+
+### Using SHAs
+* If you need more reliable versioning, you should use the SHA value associated with the version of the action. SHAs are immutable and therefore more reliable than tags or branches. However, this approach means you will not automatically receive updates for an action, 
+  including important bug fixes and security updates.
+* When selecting a SHA, you should verify it is from the action's repository and not a repository fork. Example: 
+  steps:
+    - uses: actions/javascript-action@a824008085750b8e136effc585c3cd6082bd575f
+
+### Using branches
+* Specifying a target branch for the action means it will always run the version currently on that branch. This approach can create problems if an update to the branch includes breaking changes. Example: 
+  steps:
+    - uses: actions/javascript-action@main
+
+### Using inputs and outputs with an action
+* An action often accepts or requires inputs and generates outputs that you can use. For example, an action might require you to specify a path to a file, the name of a label, or other data it will use as part of the action processing.
+
+
 
 
 
