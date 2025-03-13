@@ -32,3 +32,7 @@
 * [https://docs.github.com/en/actions/writing-workflows/about-workflows#understanding-the-workflow-file](https://docs.github.com/en/actions/writing-workflows/about-workflows#understanding-the-workflow-file) [26]
 * [https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow) [27]
 * [https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/using-conditions-to-control-job-execution](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/using-conditions-to-control-job-execution) [28]
+* [https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-pre-written-building-blocks-in-your-workflow?learn=getting_started&learnProduct=actions](https://tinyurl.com/y6avdzmh)[29]
+* [https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml](https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml)[30]
+* [https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action)[31]
+* [https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action#creating-a-dockerfile](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action#creating-a-dockerfile)[32]
