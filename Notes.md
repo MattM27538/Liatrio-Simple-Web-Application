@@ -323,6 +323,54 @@
 ### Using inputs and outputs with an action
 * An action often accepts or requires inputs and generates outputs that you can use. For example, an action might require you to specify a path to a file, the name of a label, or other data it will use as part of the action processing.
 
+## 03/13/25 -Intro to Github Action (cont.)
+### About secrets
+* Secrets allow you to store sensitive information in your organization, repository, or repository environments. Secrets are variables that you create to use in GitHub Actions workflows in an organization, repository, or repository environment. [33]
+### Naming your secrets
+* To help ensure that GitHub redacts your secrets in logs correctly, avoid using structured data as the values of secrets. [33]
+* The following rules apply to secret names:
+  Can only contain alphanumeric characters ([a-z], [A-Z], [0-9]) or underscores (_). Spaces are not allowed.
+  Must not start with the GITHUB_ prefix.
+  Must not start with a number.
+  Are case insensitive.
+  Must be unique to the repository, organization, or enterprise where they are created. [33]
+* If a secret with the same name exists at multiple levels, the secret at the lowest level takes precedence. Example: if an organization, repository, and environment all have a secret with the same name, the environment-level secret takes precedence. [33]
+### Using your secrets in workflows
+* Organization-level secrets let you share secrets between multiple repositories, which reduces the need for creating duplicate secrets. [33]
+* For environment secrets, you can enable required reviewers to control access to the secrets. A workflow job cannot access environment secrets until approval is granted by required approvers. [33]
+* To make a secret available to an action, you must set the secret as an input or environment variable in your workflow file. [33]
+* Organization and repository secrets are read when a workflow run is queued, and environment secrets are read when a job referencing the environment starts. [33]
+### Limiting credential permissions
+* When generating credentials, we recommend that you grant the minimum permissions possible. For example, instead of using personal credentials, use deploy keys or a service account. [33]
+* Consider granting read-only permissions if that's all that is needed, and limit access as much as possible. [33]
+* When generating a personal access token (classic), select the fewest scopes necessary. When generating a fine-grained personal access token, select the minimum permissions and repository access required. [33]
+### Creating secrets for a repository
+* To create secrets or variables on GitHub for a personal account repository, you must be the repository owner. To create secrets or variables on GitHub for an organization repository, you must have admin access. Lastly, to create secrets or variables for a personal 
+  account repository or an organization repository through the REST API, you must have collaborator access. [34]
+### Creating secrets for an organization
+* When creating a secret or variable in an organization, you can use a policy to limit access by repository. For example, you can grant access to all repositories, or limit access to only private repositories or a specified list of repositories. [34]
+### Using secrets in a workflow
+* To provide an action with a secret as an input or environment variable, you can use the secrets context to access secrets you've created in your repository. Example:
+  steps:
+    - name: Hello world action
+      with: # Set the secret as an input
+        super_secret: ${{ secrets.SuperSecret }}
+      env: # Or as an environment variable
+        super_secret: ${{ secrets.SuperSecret }} [34]
+
+* Secrets cannot be directly referenced in if: conditionals. Instead, consider setting secrets as job-level environment variables, then referencing the environment variables to conditionally run steps in the job. [34]
+* If a secret has not been set, the return value of an expression referencing the secret will be an empty string. [34]
+* Avoid passing secrets between processes from the command line, whenever possible. Command-line processes may be visible to other users (using the ps command) or captured by security audit events. [34]
+### Limits for secrets
+* You can store up to 1,000 organization secrets, 100 repository secrets, and 100 environment secrets. [34]
+* Secrets are limited to 48 KB in size. [34]
+* To use secrets that are larger than 48 KB, you can use a workaround to store secrets in your repository and save the decryption passphrase as a secret on GitHub. For example, you can use gpg to encrypt a file containing your secret locally before checking the 
+  encrypted file in to your repository on GitHub. [34]
+* Be careful that your secrets do not get printed when your workflow runs. When using this workaround, GitHub does not redact secrets that are printed in logs. [34]
+### Redacting secrets from workflow run logs
+* GitHub Actions automatically redacts the contents of all GitHub secrets that are printed to workflow logs. [34]
+* As a habit of best practice, you should mask all sensitive information that is not a GitHub secret by using ::add-mask::VALUE. This causes the value to be treated as a secret and redacted from logs. [34]
+* Redacting of secrets is performed by your workflow runners. This means a secret will only be redacted if it was used within a job and is accessible by the runner. If an unredacted secret is sent to a workflow run log, you should delete the log and rotate the secret. [34]
 
 
 
