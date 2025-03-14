@@ -350,14 +350,13 @@
 ### Creating secrets for an organization
 * When creating a secret or variable in an organization, you can use a policy to limit access by repository. For example, you can grant access to all repositories, or limit access to only private repositories or a specified list of repositories. [34]
 ### Using secrets in a workflow
-* To provide an action with a secret as an input or environment variable, you can use the secrets context to access secrets you've created in your repository. Example:
+* To provide an action with a secret as an input or environment variable, you can use the secrets context to access secrets you've created in your repository. Example: [34]
   steps:
     - name: Hello world action
       with:
         super_secret: ${{ secrets.SuperSecret }}
-      env: # Or as an environment variable
+      env:
         super_secret: ${{ secrets.SuperSecret }}
-  [34]
 
 * Secrets cannot be directly referenced in if: conditionals. Instead, consider setting secrets as job-level environment variables, then referencing the environment variables to conditionally run steps in the job. [34]
 * If a secret has not been set, the return value of an expression referencing the secret will be an empty string. [34]
