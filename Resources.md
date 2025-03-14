@@ -36,3 +36,6 @@
 * [https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml](https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml)[30]
 * [https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action)[31]
 * [https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action#creating-a-dockerfile](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action#creating-a-dockerfile)[32]
+* [https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets)[33]
+* [https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)[34]
+* [https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images)[35]
