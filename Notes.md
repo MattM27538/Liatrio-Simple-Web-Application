@@ -353,10 +353,11 @@
 * To provide an action with a secret as an input or environment variable, you can use the secrets context to access secrets you've created in your repository. Example:
   steps:
     - name: Hello world action
-      with: # Set the secret as an input
+      with:
         super_secret: ${{ secrets.SuperSecret }}
       env: # Or as an environment variable
-        super_secret: ${{ secrets.SuperSecret }} [34]
+        super_secret: ${{ secrets.SuperSecret }}
+  [34]
 
 * Secrets cannot be directly referenced in if: conditionals. Instead, consider setting secrets as job-level environment variables, then referencing the environment variables to conditionally run steps in the job. [34]
 * If a secret has not been set, the return value of an expression referencing the secret will be an empty string. [34]
