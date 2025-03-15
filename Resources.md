@@ -40,3 +40,10 @@
 * [https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)[34]
 * [https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images)[35]
 * [https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)[36]
+* [https://github.com/marketplace/actions/docker-setup-buildx](https://github.com/marketplace/actions/docker-setup-buildx)[37]
+* [https://github.com/marketplace/actions/build-and-push-docker-images](https://github.com/marketplace/actions/build-and-push-docker-images)(38)
+* [https://docs.docker.com/reference/cli/docker/buildx/build/#output](https://docs.docker.com/reference/cli/docker/buildx/build/#output)(39)
+* [https://github.com/marketplace/actions/upload-a-build-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)[40]
+* [https://docs.docker.com/build/ci/github-actions/share-image-jobs/](https://docs.docker.com/build/ci/github-actions/share-image-jobs/)[41]
+* [https://docs.docker.com/build/ci/github-actions/test-before-push/](https://docs.docker.com/build/ci/github-actions/test-before-push/)[42]
+* [https://github.com/marketplace/actions/docker-setup-qemu](https://github.com/marketplace/actions/docker-setup-qemu)[43]
