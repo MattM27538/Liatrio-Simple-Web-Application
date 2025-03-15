@@ -4,8 +4,8 @@ on:
   push:
 
 env:
-  TEST_VERSION_TAG: mmartinez12525/simplewebapp:test
-  LATEST_VERSION_TAG: mmartinez12525/simplewebapp:latest
+  TEST_VERSION_TAG: mattm12525/simplewebapp:test
+  LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
 
 jobs:
   build-test-publish-docker-image:
