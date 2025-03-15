@@ -25,24 +25,3 @@ jobs:
         with: 
           name: simplewebappartifact
           path: ${{runner.temp}}/simplewebapp.tar
-
-  publish-docker-image:
-    name: Publish Docker image
-    runs-on: ubuntu-latest
-    needs: build #add test job here later as well.
-    steps:
-      - name: Download app artifact from build stage.
-        uses: actions/download-artifact@4
-        with:
-          name: simplewebappartifact
-          path: ${{runner.temp}}
-
-      - name: login to docker hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{secrets.DOCKER_HUB_USERNAME}}
-          password: ${{secrets.LIATRIO_DOCKER_HUB_TOKEN}}
-
-      - name: publish image to docker hub
-        run: 
-          docker push ${{secrets.DOCKER_HUB_USERNAME}}/simplewebapp:latest
