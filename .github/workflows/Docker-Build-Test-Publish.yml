@@ -50,4 +50,4 @@ jobs:
 
       - name: publish image to docker hub
         run: 
-          docker push ${{secrets.DOCKER_HUB_USERNAME}}/simplewebapp:latest
+          docker push ${{secrets.DOCKER_HUB_USERNAME}}/latest:latest
