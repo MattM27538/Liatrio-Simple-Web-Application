@@ -4,10 +4,17 @@ on:
   push:
 
 jobs:
-  build-image:
+  build-and-publish-image:
     runs-on:ubuntu-latest:
     steps:
       - name: use checkout action
         uses: actions/checkout@v4
       - name: build docker image
         run: docker build . -t mattm12525/simpleWebApp:latest
+      - name: publish image to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.LIATRIO_DOCKER_HUB_TOKEN}}
+        run: 
+          docker push simpleWebApp:latest
