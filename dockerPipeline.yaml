@@ -1,0 +1,13 @@
+name: Build Docker Image
+
+on:
+  push:
+
+jobs:
+  build-image:
+    runs-on:ubuntu-latest:
+    steps:
+      - name: use checkout action
+        uses: actions/checkout@v4
+      - name: build docker image
+        run: docker build . -t mattm12525/simpleWebApp:latest
