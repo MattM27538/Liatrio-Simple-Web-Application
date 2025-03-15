@@ -11,7 +11,7 @@ jobs:
       - name: use checkout action
         uses: actions/checkout@v4
       - name: build docker image
-        run: docker build . -t mattm12525/simpleWebApp:latest
+        run: docker build . -t mattm12525/simplewebapp:latest
       - name: login to docker hub
         uses: docker/login-action@v3
         with:
