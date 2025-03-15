@@ -23,7 +23,7 @@ jobs:
       - name: Upload image as artifact
         uses: actions/upload-artifact@v4
         with: 
-          name: simplewebappartifact
+          name: simplewebapp
           path: ${{runner.temp}}/simplewebapp.tar
 
   publish-docker-image:
@@ -34,7 +34,7 @@ jobs:
       - name: Download app artifact from build stage.
         uses: actions/download-artifact@4
         with:
-          name: simplewebappartifact
+          name: simplewebapp
           path: ${{runner.temp}}
 
       - name: login to docker hub
