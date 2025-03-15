@@ -39,3 +39,4 @@
 * [https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets)[33]
 * [https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)[34]
 * [https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images)[35]
+* [https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)[36]
