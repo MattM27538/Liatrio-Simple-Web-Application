@@ -323,7 +323,7 @@
 ### Using inputs and outputs with an action
 * An action often accepts or requires inputs and generates outputs that you can use. For example, an action might require you to specify a path to a file, the name of a label, or other data it will use as part of the action processing.
 
-## 03/13/25 -Intro to Github Action (cont.)
+## 03/13/25 -Intro to Github Action (cont.) - Secrets
 ### About secrets
 * Secrets allow you to store sensitive information in your organization, repository, or repository environments. Secrets are variables that you create to use in GitHub Actions workflows in an organization, repository, or repository environment. [33]
 ### Naming your secrets
@@ -365,11 +365,116 @@
 * As a habit of best practice, you should mask all sensitive information that is not a GitHub secret by using ::add-mask::VALUE. This causes the value to be treated as a secret and redacted from logs. [34]
 * Redacting of secrets is performed by your workflow runners. This means a secret will only be redacted if it was used within a job and is accessible by the runner. If an unredacted secret is sent to a workflow run log, you should delete the log and rotate the secret. [34]
 
+## 03/13/25 -Intro to Github Action (cont.) - Security Hardening
+### Using secrets
+* Sensitive values should never be stored as plaintext in workflow files, but rather as secrets.
+#### Never use structured data as a secret
+* Structured data can cause secret redaction within logs to fail, because redaction largely relies on finding an exact match for the specific secret value. For example, do not use a blob of JSON, XML, or YAML (or similar) to encapsulate a secret value, as this 
+  significantly reduces the probability the secrets will be properly redacted. Instead, create individual secrets for each sensitive value.
+#### Register all secrets used within workflows
+* If a secret is used to generate another sensitive value within a workflow, that generated value should be formally registered as a secret, so that it will be redacted if it ever appears in the logs.
+* Registering secrets applies to any sort of transformation/encoding as well. If your secret is transformed in some way (such as Base64 or URL-encoded), be sure to register the new value as a secret too.
+### Audit how secrets are handled 
+* Audit how secrets are used, to help ensure they’re being handled as expected. You can do this by reviewing the source code of the repository executing the workflow, and checking any actions used in the workflow. For example, check that they’re not sent to unintended 
+  hosts, or explicitly being printed to log output.
+* View the run logs for your workflow after testing valid/invalid inputs, and check that secrets are properly redacted, or not shown.
+* It is good practice to manually review the workflow logs after testing valid and invalid inputs.
+### Use credentials that are minimally scoped
+* Make sure the credentials being used within workflows have the least privileges required, and be mindful that any user with write access to your repository has read access to all secrets configured in your repository.
+* Actions can use the GITHUB_TOKEN by accessing it from the github.token context. You should therefore make sure that the GITHUB_TOKEN is granted the minimum required permissions. 
+* It's good security practice to set the default permission for the GITHUB_TOKEN to read access only for repository contents. The permissions can then be increased, as required, for individual jobs within the workflow file.
+### Audit and rotate registered secrets
+* Periodically review the registered secrets to confirm they are still required. Remove those that are no longer needed.
+* Rotate secrets periodically to reduce the window of time during which a compromised secret is valid.
+### Consider requiring review for access to secrets
+* You can use required reviewers to protect environment secrets. A workflow job cannot access environment secrets until approval is granted by a reviewer.
+### Using CODEOWNERS to monitor changes
+* You can use the CODEOWNERS feature to control how changes are made to your workflow files. For example, if all your workflow files are stored in .github/workflows, you can add this directory to the code owners list, so that any proposed changes to these files will 
+ first require approval from a designated reviewer.
 
 
+### Understanding the risk of script injections
+* When creating workflows, custom actions, and composite actions, you should always consider whether your code might execute untrusted input from attackers. This can occur when an attacker adds malicious commands and scripts to a context. When your workflow runs, those 
+  strings might be interpreted as code which is then executed on the runner.
+* Attackers can add their own malicious content to the github context, which should be treated as potentially untrusted input. 
+* You should ensure that these values do not flow directly into workflows, actions, API calls, or anywhere else where they could be interpreted as executable code.
+### Good practices for mitigating script injection attacks
+#### Using an action instead of an inline script (recommended)
+* Use an action that passes in the value as an argument instead of using the value in an inline script.
+#### Using an intermediate environment variable
+* For inline scripts, the preferred approach to handling untrusted input is to set the value of the expression to an intermediate environment variable.
+* With this approach, the value of the expression is stored in memory and used as a variable, and doesn't interact with the script generation process.
+#### Using workflow templates for code scanning
+* Workflow templates for Advanced Security have been consolidated in a "Security" category in the Actions tab of a repository. Code scanning allows you to find security vulnerabilities before they reach production. GitHub provides workflow templates for code scanning. * You can use these suggested workflows to construct your code scanning workflows, instead of starting from scratch.
+#### Restricting permissions for tokens
+* To help mitigate the risk of an exposed token, consider restricting the assigned permissions.
+### Using OpenID Connect to access cloud resources
+* If your GitHub Actions workflows need to access resources from a cloud provider that supports OpenID Connect (OIDC), you can configure your workflows to authenticate directly to the cloud provider. This will let you stop storing these credentials as long-lived * 
+  secrets and provide other security benefits.
+### Using third-party actions
+* The individual jobs in a workflow can interact with (and compromise) other jobs. As such the compromise of a single action within a workflow can be very significant, as that compromised action would have access to all secrets configured on your repository, and may be 
+  able to use the GITHUB_TOKEN to write to the repository. Consequently, there is significant risk in sourcing actions from third-party repositories on GitHub.
+* You can help mitigate this risk by following these good practices:
+    Pin actions to a full length commit SHA
+    Pinning an action to a full length commit SHA is currently the only way to use an action as an immutable release. Pinning to a particular SHA helps mitigate the risk of a bad actor adding a backdoor to the action's repository, as they would need to generate a SHA-1     collision for a valid Git object payload. When selecting a SHA, you should verify it is from the action's repository and not a repository fork.
+    Audit the source code of the action
+    Ensure that the action is handling the content of your repository and secrets as expected. For example, check that secrets are not sent to unintended hosts, or are not inadvertently logged.
+    Pin actions to a tag only if you trust the creator
+    Although pinning to a commit SHA is the most secure option, specifying a tag is more convenient and is widely used. If you’d like to specify a tag, then be sure that you trust the action's creators. Note that there is risk to this approach even if you trust the         author, because a tag can be moved or deleted if a bad actor gains access to the repository storing the action.
+### Reusing third-party workflows
+* The same principles described above for using third-party actions also apply to using third-party workflows. You can help mitigate the risks associated with reusing workflows by following the same good practices outlined above.
+### Using Dependabot version updates to keep actions up to date
+* You can use Dependabot to ensure that references to actions and reusable workflows used in your repository are kept up to date.
+### Preventing GitHub Actions from creating or approving pull requests
+* You can choose to allow or prevent GitHub Actions workflows from creating or approving pull requests. Allowing workflows, or any other automation, to create or approve pull requests could be a security risk if the pull request is merged without proper oversight.
+### Using code scanning to secure workflows
+* Code scanning can automatically detect and suggest improvements for common vulnerable patterns used in GitHub Actions workflows.
+### Using OpenSSF Scorecards to secure workflow dependencies
+* Scorecards is an automated security tool that flags risky supply chain practices. Once configured, the Scorecards action runs automatically on repository changes, and alerts developers about risky supply chain practices using the built-in code scanning experience.
+## Potential impact of a compromised runner
+### Accessing secrets
+* Workflows triggered from a forked repository using the pull_request event have read-only permissions and have no access to secrets. However, these permissions differ for various event triggers such as issue_comment, issues, push and pull_request from a branch within 
+  the repository, where the attacker could attempt to steal repository secrets or use the write permission of the job's GITHUB_TOKEN.
+* If the secret or token is set to an environment variable, it can be directly accessed through the environment using printenv.
+* If the secret is used directly in an expression, the generated shell script is stored on-disk and is accessible
+* For a custom action, the risk can vary depending on how a program is using the secret it obtained from the argument.
+### Stealing the job's GITHUB_TOKEN
+* It is possible for an attacker to steal a job's GITHUB_TOKEN. The GitHub Actions runner automatically receives a generated GITHUB_TOKEN with permissions that are limited to just the repository that contains the workflow, and the token expires after the job has 
+  completed. Once expired, the token is no longer useful to an attacker. To work around this limitation, they can automate the attack and perform it in fractions of a second by calling an attacker-controlled server with the token.
+
+### Modifying the contents of a repository
+* The attacker server can use the GitHub API to modify repository content, including releases, if the assigned permissions of GITHUB_TOKEN are not restricted.
+
+### Considering cross-repository access
+* This list describes the recommended approaches for accessing repository data within a workflow, in descending order of preference:
+#### The GITHUB_TOKEN
+* This token is intentionally scoped to the single repository that invoked the workflow, and can have the same level of access as a write-access user on the repository. The token is created before each job begins and expires when the job is finished. 
+* The GITHUB_TOKEN should be used whenever possible.
+#### Repository deploy key
+* Deploy keys are one of the only credential types that grant read or write access to a single repository, and can be used to interact with another repository within a workflow.
+* Note that deploy keys can only clone and push to the repository using Git, and cannot be used to interact with the REST or GraphQL API, so they may not be appropriate for your requirements.
+#### GitHub App tokens
+* GitHub Apps can be installed on select repositories, and even have granular permissions on the resources within them.
+#### Personal access tokens
+* You should never use a personal access token (classic). These tokens grant access to all repositories within the organizations that you have access to, as well as all personal repositories in your personal account. This indirectly grants broad access to all write- 
+  access users of the repository the workflow is in.
+* If you do use a personal access token, you should never use a personal access token from your own account. If you later leave an organization, workflows using this token will immediately break, and debugging this issue can be challenging.
+#### SSH keys on a personal account
+* Workflows should never use the SSH keys on a personal account. Similar to personal access tokens (classic), they grant read/write permissions to all of your personal repositories as well as all the repositories you have access to through organization membership. You 
+  should use individual deploy keys instead.  
 
 
+### Hardening for GitHub-hosted runners
+* Reviewing the supply chain for GitHub-hosted runners
+* For GitHub-hosted runners created from images maintained by GitHub, you can view a software bill of materials (SBOM) to see what software was pre-installed on the runner. You can provide your users with the SBOM which they can run through a vulnerability scanner to 
+  validate if there are any vulnerabilities in the product. If you are building artifacts, you can include this SBOM in your bill of materials for a comprehensive list of everything that went into creating your software.
+* For third-party images, such as the images for ARM-powered runners, you can find details of the software that's included in the image in the actions/partner-runner-images repository.
 
-  
+### Denying access to hosts
+* GitHub-hosted runners are provisioned with an etc/hosts file that blocks network access to various cryptocurrency mining pools and malicious sites. Hosts such as MiningMadness.com and cpu-pool.com are rerouted to localhost so that they do not present a significant 
+  security risk. 
+### Auditing GitHub Actions events
+* You can use the security log to monitor activity for your user account and the audit log to monitor activity in your organization. The security and audit log records the type of action, when it was run, and which personal account performed the action.
+
 
   
