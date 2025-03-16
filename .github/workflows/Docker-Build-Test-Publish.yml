@@ -6,7 +6,7 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
-  GITHUB_ACTION_PATH: ../app
+  GITHUB_ACTION_PATH: app
 
 jobs:
   build-test-publish-docker-image:
@@ -31,6 +31,9 @@ jobs:
           load: true
           tags: ${{env.TEST_VERSION_TAG}}
       
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        
       - name: Check for correct image name 
         run: |
             echo ${PWD}
