@@ -31,8 +31,8 @@ jobs:
           load: true
           tags: ${{env.TEST_VERSION_TAG}}
       
-      # - name: Checkout repo
-      #   uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       # - name: Check for correct image name 
       #   run: |
