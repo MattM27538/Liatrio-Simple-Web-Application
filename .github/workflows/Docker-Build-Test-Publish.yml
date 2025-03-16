@@ -31,15 +31,15 @@ jobs:
           load: true
           tags: ${{env.TEST_VERSION_TAG}}
       
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
 
-      - name: Check for correct image name 
-        run: |
-            echo ${PWD}
-            echo $(ls )
-            echo $(ls app)
-            docker image ls -a
+      # - name: Check for correct image name 
+      #   run: |
+      #       echo ${PWD}
+      #       echo $(ls )
+      #       echo $(ls app)
+      #       docker image ls -a
 
       - name: Run nodeJS in background
         run: docker run -p 80:80/tcp simplewebapp:test &            
