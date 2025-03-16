@@ -33,12 +33,12 @@ jobs:
       
       - name: Checkout repo
         uses: actions/checkout@v4
-        
+
       - name: Check for correct image name 
         run: |
             echo ${PWD}
-            echo $(ls ..)
-            echo $(ls ../app)
+            echo $(ls )
+            echo $(ls /app)
             docker image ls -a
 
       - name: Test
