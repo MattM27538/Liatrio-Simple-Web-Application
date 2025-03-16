@@ -41,6 +41,9 @@ jobs:
             echo $(ls app)
             docker image ls -a
 
+      - name: Run nodeJS in background
+        run: docker run -p 80:80/tcp simplewebapp:test &            
+
       - name: Test
         uses: liatrio/github-actions/apprentice-action@master
 
