@@ -30,10 +30,8 @@ jobs:
           load: true
           tags: ${{env.TEST_VERSION_TAG}}
       
-      - name: Run Docker image 
-        run: |
-            docker image ls -a
-            docker build -t simplewebapp .
+      - name: Check for correct image name 
+        run: docker image ls -a
 
       - name: Test
         uses: liatrio/github-actions/apprentice-action@master
