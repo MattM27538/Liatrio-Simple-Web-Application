@@ -30,9 +30,10 @@ jobs:
           load: true
           tags: ${{env.TEST_VERSION_TAG}}
       
-      #Add Testing here
-      
-      - name: Build and push
+      - name: Test
+        uses: liatrio/github-actions/apprentice-action@master
+
+      - name: Build and push image to Docker
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
