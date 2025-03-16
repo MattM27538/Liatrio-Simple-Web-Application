@@ -6,6 +6,7 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
+  GITHUB_ACTION_PATH: app
 
 jobs:
   build-test-publish-docker-image:
@@ -31,7 +32,10 @@ jobs:
           tags: ${{env.TEST_VERSION_TAG}}
       
       - name: Check for correct image name 
-        run: docker image ls -a
+        run: |
+            echo ${PWD}
+            ls
+            docker image ls -a
 
       - name: Test
         uses: liatrio/github-actions/apprentice-action@master
