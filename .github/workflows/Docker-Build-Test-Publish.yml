@@ -6,7 +6,7 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
-  GITHUB_ACTION_PATH: app
+  # GITHUB_ACTION_PATH: app
 
 jobs:
   build-test-publish-docker-image:
@@ -38,7 +38,7 @@ jobs:
         run: |
             echo ${PWD}
             echo $(ls )
-            echo $(ls /app)
+            echo $(ls app)
             docker image ls -a
 
       - name: Test
