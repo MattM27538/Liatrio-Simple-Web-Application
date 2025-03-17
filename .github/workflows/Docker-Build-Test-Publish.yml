@@ -38,12 +38,12 @@ jobs:
       - name: Test
         uses: liatrio/github-actions/apprentice-action@0b41561cca6822cc8d880fe0e49e7807a41fdf91
 
-      - name: Build and push image to Docker
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{env.LATEST_VERSION_TAG}}
+      # - name: Build and push image to Docker
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     platforms: linux/amd64,linux/arm64
+      #     push: true
+      #     tags: ${{env.LATEST_VERSION_TAG}}
 
       - name: Google Cloud authentication
         uses: google-github-actions/auth@v2
@@ -53,4 +53,3 @@ jobs:
       
       - name: Set up cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-      
