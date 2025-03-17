@@ -55,3 +55,12 @@ jobs:
       
       - name: Set up cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy to cloud
+        run: |
+            echo SERVICE_NAME $SERVICE_NAME
+            gcloud run deploy $SERVICE_NAME 
+            --image mattm12525/simplewebapp:test
+            --platform managed 
+            --region us-west1
+            --allow-unauthenticated
