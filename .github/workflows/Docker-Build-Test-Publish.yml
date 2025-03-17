@@ -63,9 +63,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          echo $(ls)
           echo $(ls ../..)
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f ../Dockerfile .
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f ../../Dockerfile .
           docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to cloud
