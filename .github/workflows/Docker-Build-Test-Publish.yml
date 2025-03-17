@@ -6,6 +6,8 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
+  PROJECT_ID: Auto-deploy-simple-web-app
+  SERVICE_NAME: Auto-deploy-simple-web-app
 
 jobs:
   build-test-publish-docker-image:
@@ -42,3 +44,13 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{env.LATEST_VERSION_TAG}}
+
+      - name: Google Cloud authentication
+        uses: google-github-actions/auth@v2
+        with: 
+          credentials_json: ${{GCP_SERVICE_ACC_KEY}}
+          project_id: ${{PROJECT_ID}}
+      
+      - name: Set up cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+      
