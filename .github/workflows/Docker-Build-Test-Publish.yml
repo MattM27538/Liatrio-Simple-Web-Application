@@ -6,8 +6,8 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
-  PROJECT_ID: auto-deploy-simple-web-app
-  SERVICE_NAME: simple-web-app
+  PROJECT_ID: noble-aquifer-454000-a7
+  SERVICE_NAME: auto-deploy-simple-web-app
   DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/auto-deploy-simple-web-app/simple-web-app/simple-web-app
 
 jobs:
