@@ -74,5 +74,5 @@ jobs:
             --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --port=3000 \
             --platform managed \
-            --region us-west1 \
+            --region us-east1 \
             --allow-unauthenticated
