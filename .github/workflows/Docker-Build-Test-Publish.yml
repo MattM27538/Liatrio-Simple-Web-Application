@@ -8,7 +8,6 @@ env:
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
   PROJECT_ID: noble-aquifer-454000-a7
   SERVICE_NAME: auto-deploy-simple-web-app
-  DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/auto-deploy-simple-web-app/simple-web-app/simple-web-app
 
 jobs:
   build-test-publish-docker-image:
@@ -57,23 +56,3 @@ jobs:
       
       - name: Set up cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-
-      - name: Configure Docker
-        run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev
-
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     echo $(ls ../..)
-      #     docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
-      #     docker push ${{ env.DOCKER_IMAGE_URL }}:latest
-
-      # - name: Deploy to cloud
-      #   run: |
-      #       echo SERVICE_NAME $SERVICE_NAME
-      #       gcloud run deploy $SERVICE_NAME \
-      #       --image ${{ env.DOCKER_IMAGE_URL }}:latest \
-      #       --port=3000 \
-      #       --platform managed \
-      #       --region us-east1 \
-      #       --allow-unauthenticated
