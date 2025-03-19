@@ -8,7 +8,6 @@ env:
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
   PROJECT_ID:  liatrio-web-app-454200
   SERVICE_NAME: auto-deploy-simple-web-app
-  DOCKER_IMAGE_URL: us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image/liatrio-web-app-image
   
 jobs:
   build-test-publish-docker-image:
@@ -58,10 +57,10 @@ jobs:
       - name: Set up cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker
-        run: |
-          gcloud info
-          gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
+      # - name: Configure Docker
+      #   run: |
+      #     gcloud info
+      #     gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
 
       - name: Build and Push Docker Image
         run: |
@@ -70,7 +69,6 @@ jobs:
           docker image list
           docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
 
-      # gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
       # - name: Deploy to cloud
       #   run: |
       #       echo SERVICE_NAME $SERVICE_NAME
