@@ -66,15 +66,15 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           echo $(ls)
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
-          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+          docker build -t testimage:latest -f Dockerfile .
+          docker push us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository
 
-      - name: Deploy to cloud
-        run: |
-            echo SERVICE_NAME $SERVICE_NAME
-            gcloud run deploy $SERVICE_NAME \
-            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
-            --port=8080 \
-            --platform managed \
-            --region us-west2 \
-            --allow-unauthenticated
+      # - name: Deploy to cloud
+      #   run: |
+      #       echo SERVICE_NAME $SERVICE_NAME
+      #       gcloud run deploy $SERVICE_NAME \
+      #       --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+      #       --port=8080 \
+      #       --platform managed \
+      #       --region us-west2 \
+      #       --allow-unauthenticated
