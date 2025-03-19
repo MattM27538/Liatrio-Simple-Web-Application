@@ -63,13 +63,13 @@ jobs:
           gcloud info
           gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
 
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     echo $(ls)
-      #     docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
-      #     docker image list
-      #     gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
-      #     docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
+      - name: Build and Push Docker Image
+        run: |
+          echo $(ls)
+          docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
+          docker image list
+          gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
+          docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
 
       # - name: Deploy to cloud
       #   run: |
