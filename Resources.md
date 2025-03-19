@@ -53,3 +53,9 @@
 * [https://www.chaijs.com/guide/styles/#expect](https://www.chaijs.com/guide/styles/#expect)[46]
 * [https://axios-http.com/docs/intro](https://axios-http.com/docs/intro)[47]
 * [https://docs.docker.com/engine/network/drivers/bridge/](https://docs.docker.com/engine/network/drivers/bridge/)[48]
+
+## Google Cloud
+* [https://cloud.google.com/build/docs/locations#restricted_regions_for_some_projects](https://cloud.google.com/build/docs/locations#restricted_regions_for_some_projects)[49]
+* [https://cloud.google.com/sdk/docs/authorizing](https://cloud.google.com/sdk/docs/authorizing)[50]
+* [https://cloud.google.com/sdk/docs/install#linux](https://cloud.google.com/sdk/docs/install#linux)[51]
+* [https://cloud.google.com/run/docs/deploying](https://cloud.google.com/run/docs/deploying)[52]
