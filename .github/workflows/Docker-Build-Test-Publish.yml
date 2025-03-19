@@ -57,8 +57,6 @@ jobs:
           export_default_credentials: true
 
       - name: build and push the docker image
-        env:
-          GOOGLE_PROJECT: ${{PROJECT_ID}}
         run: |
           gcloud auth configure-docker us-west2-docker.pkg.dev
           docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/myTestImage:latest .
