@@ -8,7 +8,7 @@ env:
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
   PROJECT_ID:  liatrio-web-app-454200
   SERVICE_NAME: auto-deploy-simple-web-app
-  DOCKER_IMAGE_URL: us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image/liatrio-web-app-image
+  DOCKER_IMAGE_URL: us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image/liatrio-web-app-image
   
 jobs:
   build-test-publish-docker-image:
@@ -61,15 +61,15 @@ jobs:
       - name: Configure Docker
         run: |
           gcloud info
-          gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
+          gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
 
       - name: Build and Push Docker Image
         run: |
           echo $(ls)
-          docker build -t us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
+          docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
           docker image list
-          gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west1
-          docker push us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
+          gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
+          docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
 
       # - name: Deploy to cloud
       #   run: |
