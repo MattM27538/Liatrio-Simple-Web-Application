@@ -8,6 +8,7 @@ env:
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
   PROJECT_ID:  liatrio-web-app-454200
   SERVICE_NAME: auto-deploy-simple-web-app
+  DOCKER_IMAGE_URL: us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image
   
 jobs:
   build-test-publish-docker-image:
@@ -38,12 +39,12 @@ jobs:
       - name: Test
         uses: liatrio/github-actions/apprentice-action@0b41561cca6822cc8d880fe0e49e7807a41fdf91
 
-      - name: Build and push image to Docker
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{env.LATEST_VERSION_TAG}}
+      # - name: Build and push image to Docker
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     platforms: linux/amd64,linux/arm64
+      #     push: true
+      #     tags: ${{env.LATEST_VERSION_TAG}}
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -60,20 +61,20 @@ jobs:
       - name: Configure Docker
         run: |
           gcloud info
-          gcloud auth configure-docker us-central1-docker.pkg.dev
+          gcloud auth configure-docker us-west2-docker.pkg.dev
 
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     echo $(ls ../..)
-      #     docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
-      #     docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+      - name: Build and Push Docker Image
+        run: |
+          echo $(ls)
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
+          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
-      # - name: Deploy to cloud
-      #   run: |
-      #       echo SERVICE_NAME $SERVICE_NAME
-      #       gcloud run deploy $SERVICE_NAME \
-      #       --image ${{ env.DOCKER_IMAGE_URL }}:latest \
-      #       --port=3000 \
-      #       --platform managed \
-      #       --region us-east1 \
-      #       --allow-unauthenticated
+      - name: Deploy to cloud
+        run: |
+            echo SERVICE_NAME $SERVICE_NAME
+            gcloud run deploy $SERVICE_NAME \
+            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+            --port=8080 \
+            --platform managed \
+            --region us-west2 \
+            --allow-unauthenticated
