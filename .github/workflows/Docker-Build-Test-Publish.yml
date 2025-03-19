@@ -60,7 +60,7 @@ jobs:
       - name: Configure Docker
         run: |
           gcloud info
-          gcloud auth configure-docker us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/ --quiet
+          gcloud auth configure-docker us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image --quiet
 
       - name: Build and Push Docker Image
         run: |
