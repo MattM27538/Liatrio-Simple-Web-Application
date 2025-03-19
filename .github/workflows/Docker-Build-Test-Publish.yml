@@ -6,8 +6,7 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
-  # PROJECT_ID:  liatrio-web-app-454200
-  PROJECT_ID:  liatrio-web-app
+  PROJECT_ID:  liatrio-web-app-454200
   SERVICE_NAME: auto-deploy-simple-web-app
   DOCKER_IMAGE_URL: us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image/liatrio-web-app-image
   
@@ -50,41 +49,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: install the gcloud cli
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          project_id: env.PROJECT_ID
-          service_account_key: ${{secrets.GCP_SERVICE_ACC_KEY}}
-          export_default_credentials: true
-
-      - name: build and push the docker image
-        run: |
-          gcloud auth configure-docker us-west2-docker.pkg.dev
-          docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/myTestImage:latest .
-          docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/myTestImage:latest
-
-      # - name: Google Cloud authentication
-      #   uses: google-github-actions/auth@v2
-      #   with: 
-      #     credentials_json: ${{secrets.GCP_SERVICE_ACC_KEY}}
-      #     project_id: ${{env.PROJECT_ID}}
+      - name: Google Cloud authentication
+        uses: google-github-actions/auth@v2
+        with: 
+          credentials_json: ${{secrets.GCP_SERVICE_ACC_KEY}}
+          project_id: ${{env.PROJECT_ID}}
       
-      # - name: Set up cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v2
+      - name: Set up cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      # - name: Configure Docker
-      #   run: |
-      #     gcloud info
-      #     gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
+      - name: Configure Docker
+        run: |
+          gcloud info
+          gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
 
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     echo $(ls)
-      #     docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
-      #     docker image list
-      #     gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
-      #     docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
+      - name: Build and Push Docker Image
+        run: |
+          echo $(ls)
+          docker build -t us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0 -f Dockerfile .
+          docker image list
+          docker push us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/test-image:v2.0
 
+      # gcloud artifacts repositories describe REPOSITORY --project=liatrio-web-app-454200 --location=us-west2
       # - name: Deploy to cloud
       #   run: |
       #       echo SERVICE_NAME $SERVICE_NAME
