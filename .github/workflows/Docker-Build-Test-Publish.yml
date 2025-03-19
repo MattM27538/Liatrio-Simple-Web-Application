@@ -6,7 +6,8 @@ on:
 env:
   TEST_VERSION_TAG: mattm12525/simplewebapp:test
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
-  PROJECT_ID:  liatrio-web-app-454200
+  # PROJECT_ID:  liatrio-web-app-454200
+  PROJECT_ID:  liatrio-web-app
   SERVICE_NAME: auto-deploy-simple-web-app
   DOCKER_IMAGE_URL: us-west2-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image/liatrio-web-app-image
   
