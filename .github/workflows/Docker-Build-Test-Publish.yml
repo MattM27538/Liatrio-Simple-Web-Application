@@ -8,7 +8,7 @@ env:
   LATEST_VERSION_TAG: mattm12525/simplewebapp:latest
   PROJECT_ID:  liatrio-web-app-454200
   SERVICE_NAME: auto-deploy-simple-web-app
-  DOCKER_IMAGE_URL: us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository/liatrio-web-app-image
+  DOCKER_IMAGE_URL: us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository
   
 jobs:
   build-test-publish-docker-image:
@@ -67,13 +67,13 @@ jobs:
         run: |
           echo $(ls)
           docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
-          docker push us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository:latest
+          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to cloud
         run: |
             echo SERVICE_NAME $SERVICE_NAME
             gcloud run deploy $SERVICE_NAME \
-            --image us-west1-docker.pkg.dev/liatrio-web-app-454200/liatrio-web-app-repository:latest \
+            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --port=8080 \
             --platform managed \
             --region us-west2 \
