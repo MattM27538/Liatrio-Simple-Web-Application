@@ -8,19 +8,16 @@ jobs:
     name: Build-Test-Publish Docker image
     runs-on: ubuntu-latest
     steps:    
-      - name: login to Docker Hub
+      - name: login to Dockerhub
         uses: docker/login-action@v3
         with:
           username: ${{secrets.DOCKER_HUB_USERNAME}}
           password: ${{secrets.LIATRIO_DOCKER_HUB_TOKEN}}
 
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and export image to Docker
+      - name: Build and load Docker image
         uses: docker/build-push-action@v6
         with:
           load: true
