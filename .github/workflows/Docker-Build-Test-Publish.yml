@@ -14,10 +14,10 @@ jobs:
           username: ${{secrets.DOCKER_HUB_USERNAME}}
           password: ${{secrets.LIATRIO_DOCKER_HUB_TOKEN}}
 
-      - name: 3.1 Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 3.2 Build and load Docker image
+      - name: Build and load Docker image
         uses: docker/build-push-action@v6
         with:
           load: true
@@ -26,10 +26,10 @@ jobs:
       - name: Run nodeJS in background for tests
         run: docker run -p 80:80/tcp mattm12525/simplewebapp:test &            
 
-      - name: 3.3 Test
+      - name: Test
         uses: liatrio/github-actions/apprentice-action@0b41561cca6822cc8d880fe0e49e7807a41fdf91
 
-      - name: 3.4 Build and push image to Dockerhub
+      - name: Build and push image to Dockerhub
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
